@@ -52,7 +52,7 @@ Ensure the following software is installed:
 - Python **3.13** or later
 - Node.js **18** or later
 - npm
-- Git
+- Git (if cloning repo)
 
 ---
 

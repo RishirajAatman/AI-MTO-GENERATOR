@@ -1,6 +1,6 @@
 from pathlib import Path
 from fastapi import UploadFile
-
+from app.core.config import GEMINI_ENABLED, GEMINI_API_KEY
 from app.core.config import GEMINI_ENABLED
 from app.models.mto import MTOResponse
 
@@ -39,30 +39,27 @@ def run_pipeline(file: UploadFile) -> tuple[MTOResponse, Path, bool]:
 
     gemini_used = False
 
-    if GEMINI_ENABLED:
-
+    if GEMINI_ENABLED and GEMINI_API_KEY:
         try:
-
             print("🤖 Calling Gemini...")
 
             gemini_response = extract_mto_from_image(processed_path)
-
-            print("✅ Gemini Success")
 
             mto = MTOResponse.model_validate(gemini_response)
 
             gemini_used = True
 
-        except Exception as e:
+            print("✅ Gemini Success")
 
+        except Exception as e:
             print(f"❌ Gemini Error: {e}")
             print("⚠️ Falling back to Mock Response")
 
             mto = get_mock_response()
 
     else:
-
-        print("⚠️ Gemini Disabled")
+        print("⚠️ Gemini disabled or API key not configured.")
+        print("⚠️ Using Mock Response")
 
         mto = get_mock_response()
 
