@@ -1,11 +1,21 @@
 from fastapi import FastAPI
 from app.routes.extract import router as extract_router
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 from app.routes.export import router as export_router
 app = FastAPI(
     title="Isometric MTO Generator API",
     description="Backend API for extracting Material Take-Off (MTO) from piping isometric drawings.",
     version="1.0.0"
+)
+UPLOADS_DIR = Path("uploads")
+UPLOADS_DIR.mkdir(exist_ok=True)
+
+app.mount(
+    "/uploads",
+    StaticFiles(directory=UPLOADS_DIR),
+    name="uploads"
 )
 app.add_middleware(
     CORSMiddleware,

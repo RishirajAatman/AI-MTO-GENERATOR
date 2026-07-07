@@ -11,12 +11,12 @@ import Footer from "@/components/Footer";
 import api from "@/lib/api";
 import StatusBanner from "@/components/StatusBanner";
 import { MTOResponse } from "@/types/mto";
-
+import DrawingPreview from "@/components/DrawingPreview";
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
 
   const [loading, setLoading] = useState(false);
-
+  const [previewImage, setPreviewImage] = useState<string>("");
   const [result, setResult] = useState<MTOResponse | null>(null);
   const [source, setSource] = useState<"gemini" | "mock" | null>(null);
   async function handleExtract() {
@@ -39,6 +39,9 @@ export default function Home() {
       console.log("ITEMS", response.data.mto.items);
       setResult(response.data.mto);
       setSource(response.data.source);
+      setPreviewImage(
+  `http://127.0.0.1:8000${response.data.preview_image}`
+);
     } catch (error) {
       console.error(error);
 
@@ -78,17 +81,32 @@ export default function Home() {
         />
         {!result && !loading && <EmptyState />}
         {/* Results */}
-        {result && (
+        {/* Results */}
+{/* Results */}
+{/* Results */}
+{result && (
   <>
-        {source && <StatusBanner source={source} />}
+    {source && <StatusBanner source={source} />}
 
-        <SummaryCards summary={result.summary} />
+    {/* Preview + Metadata */}
+    <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
 
-        <MetadataCard meta={result.drawing_meta} />
+      <DrawingPreview previewImage={previewImage} />
 
-        <MtoTable items={result.items} />
+      <div className="h-full">
+    <MetadataCard meta={result.drawing_meta} />
+</div>
 
-      <DownloadButton />
+    </div>
+
+    {/* Summary */}
+    <SummaryCards summary={result.summary} />
+
+    {/* MTO */}
+    <MtoTable items={result.items} />
+
+    {/* Export */}
+    <DownloadButton />
   </>
 )}
         <Footer />

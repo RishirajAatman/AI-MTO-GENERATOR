@@ -22,6 +22,14 @@ export interface Summary {
   bolt_sets: number;
   field_welds: number;
 }
+export interface MTOResponse {
+  drawing_meta: DrawingMeta;
+  items: MTOItem[];
+  summary: Summary;
+
+  source?: "gemini" | "mock";
+  preview_image?: string;
+}
 
 export interface DrawingMeta {
   drawing_no: string;

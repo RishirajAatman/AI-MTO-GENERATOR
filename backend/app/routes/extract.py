@@ -20,10 +20,12 @@ async def extract(file: UploadFile = File(...)):
             detail="Only PDF, PNG and JPG files are allowed."
         )
 
-    mto, csv_path, gemini_used = run_pipeline(file)
+    mto, csv_path, gemini_used, preview_image = run_pipeline(file)
     export.LAST_CSV_PATH = csv_path
+    print(preview_image)
     return {
     "mto": mto.model_dump(),
     "csv_file": str(csv_path),
-    "source": "gemini" if gemini_used else "mock"
-    }
+    "source": "gemini" if gemini_used else "mock",
+    "preview_image": preview_image,
+}

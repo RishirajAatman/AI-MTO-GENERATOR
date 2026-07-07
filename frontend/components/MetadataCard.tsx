@@ -48,7 +48,7 @@ export default function MetadataCard({ meta }: Props) {
   ];
 
   return (
-    <div className="mt-10 bg-white rounded-3xl shadow-lg border border-slate-200 p-8">
+   <div className="bg-white rounded-3xl shadow-lg border border-slate-200 p-8 h-full flex flex-col">
 
       <h2 className="text-2xl font-bold text-slate-800 mb-8">
         📄 Drawing Information

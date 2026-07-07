@@ -12,7 +12,7 @@ from app.services.csv_service import generate_csv
 from app.services.mock_service import get_mock_response
 
 
-def run_pipeline(file: UploadFile) -> tuple[MTOResponse, Path, bool]:
+def run_pipeline(file: UploadFile) -> tuple[MTOResponse, Path, bool, str]:
     """
     Complete MTO extraction pipeline.
 
@@ -32,7 +32,7 @@ def run_pipeline(file: UploadFile) -> tuple[MTOResponse, Path, bool]:
 
     if file.content_type == "application/pdf":
         processed_path = convert_pdf_to_image(saved_path)
-
+    preview_image = f"/uploads/{processed_path.name}"
      # -----------------------------
     # Step 3 : AI Extraction
     # -----------------------------
@@ -75,4 +75,4 @@ def run_pipeline(file: UploadFile) -> tuple[MTOResponse, Path, bool]:
 
     print("✅ Pipeline completed successfully.")
 
-    return mto, csv_path, gemini_used
+    return mto, csv_path, gemini_used, preview_image
