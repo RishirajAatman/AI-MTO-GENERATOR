@@ -85,6 +85,19 @@ Install the required dependencies:
 ```bash
 pip install -r requirements.txt
 ```
+### Install Poppler (Required for PDF Processing)
+
+The application uses **pdf2image** to convert PDF drawings into images. On Windows, this requires **Poppler**.
+1. Download the latest Poppler for Windows:
+   https://github.com/oschwartz10612/poppler-windows/releases
+2. Extract the downloaded ZIP file.
+3. Add the `Library/bin` folder to your system **PATH**.
+Example:
+```text
+C:\poppler\Library\bin
+```
+4. Restart your terminal after updating the PATH.
+> **Note:** Poppler is only required when processing PDF drawings. PNG and JPG images do not require it.
 
 Create a `.env` file by copying `.env.example`:
 
